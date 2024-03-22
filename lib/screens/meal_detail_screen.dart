@@ -3,14 +3,24 @@ import 'package:recipe_app/common/my_colors.dart';
 import 'package:recipe_app/models/meal.dart';
 import 'package:recipe_app/widgets/custom_app_bar.dart';
 
-class MealDetailScreen extends StatelessWidget {
-  const MealDetailScreen({super.key});
+class MealDetailScreen extends StatefulWidget {
+  final void Function(Meal) toggleFavorite;
+  final bool Function(Meal) isFavorite;
 
+  const MealDetailScreen({
+    required this.toggleFavorite,
+    required this.isFavorite,
+    super.key,
+  });
+
+  @override
+  State<MealDetailScreen> createState() => _MealDetailScreenState();
+}
+
+class _MealDetailScreenState extends State<MealDetailScreen> {
   Widget _createListView(Widget child) {
     return child;
   }
-
-  void _favoriteRecipe() {}
 
   Widget _createContainerTitleAndList(
       BuildContext context, String title, Widget child) {
@@ -43,7 +53,7 @@ class MealDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final meal = ModalRoute.of(context)?.settings.arguments as Meal;
+    final meal = ModalRoute.of(context)!.settings.arguments as Meal;
 
     return Scaffold(
       appBar:
@@ -173,12 +183,15 @@ class MealDetailScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _favoriteRecipe,
+        onPressed: () {
+          widget.toggleFavorite(meal);
+          setState(() {});
+        },
         elevation: 8,
         shape: const CircleBorder(),
         backgroundColor: MyColors.background,
-        child: const Icon(
-          Icons.favorite,
+        child: Icon(
+          widget.isFavorite(meal) ? Icons.favorite : Icons.favorite_border,
           color: MyColors.mainColor,
         ),
       ),

@@ -1,8 +1,10 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import '../models/category.dart';
 import '../models/meal.dart';
 
-final dummyCategories = [
+final DUMMY_CATEGORIES = [
   Category(
     id: 'c1',
     title: 'Italiano',
@@ -55,7 +57,7 @@ final dummyCategories = [
   ),
 ];
 
-final dummyMeals = [
+final DUMMY_MEALS = [
   Meal(
     id: 'm1',
     categories: ['c1', 'c2'],
